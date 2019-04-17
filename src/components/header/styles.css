@@ -1,0 +1,30 @@
+.header {
+  background-color: #ffffff70;
+  padding: 5px;
+  box-shadow: 0px 2px 10px -5px rgba(0, 0, 0, 0.25);
+}
+
+.header-container {
+  display: flex;
+  font-weight: bold;
+  color: #868686;
+  font-size: 0.9em;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-error {
+  font-size: 0.9em;
+  padding: 2px;
+  color: #808080;
+  font-style: italic;
+
+}
+
+.header-label {
+  font-size: 0.8em;
+}
+.error-rate {
+  width: 115px;
+  margin-right: 5px;
+}

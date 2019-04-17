@@ -4,12 +4,14 @@ import { bindActionCreators } from 'redux';
 
 import { ApplicationState } from '../../store';
 import { Todo } from '../../store/todos/types';
+import * as TodoActions from '../../store/todos/actions';
 
 
 interface StateProps {
 }
 
 interface DispatchProps {
+    deleteTodoRequest(todo: Todo): void
 }
 
 interface OwnProps {
@@ -24,9 +26,9 @@ class TodoComponent extends Component<Props> {
     }
 
     render() {
-        const { todo } = this.props;
+        const { todo, deleteTodoRequest } = this.props;
         return (
-            <li> {todo.text} </li>
+            <li onClick={() => deleteTodoRequest(todo)}> {todo.text} </li>
         )
     }
 }
@@ -34,6 +36,6 @@ class TodoComponent extends Component<Props> {
 const mapStateToProps = ({ }: ApplicationState) => ({});
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(TodoActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoComponent);

@@ -8,13 +8,9 @@ import { Todo, TodosState } from '../../store/todos/types';
 import * as TodosActions from '../../store/todos/actions';
 
 import TodoComponent from '../todo';
-import { UserSessionState } from '../../store/userSession/types';
-
-
 
 interface StateProps {
     todosState: TodosState
-    userSessionState: UserSessionState
 }
 
 interface DispatchProps {
@@ -29,26 +25,31 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 class Todosomponent extends Component<Props> {
 
+    printTodos(todos: Todo[]) {
+        return todos.map( todo =>
+            <TodoComponent key={todo.id} todo={todo} />
+        )
+    }
+
     async componentDidMount() {
         const { getAllRequest } = this.props;
         getAllRequest();
     }
 
     render() {
-        const { todosState, userSessionState } = this.props;
+        const { todosState } = this.props;
         console.log(todosState.data);
         return (
-            userSessionState.data && <TodoComponent todo={{
-                text: 'asdasd',
-                urgency: 5,
-                isCompleted: true
-            }} />
+            <div>
+                {this.printTodos(todosState.data)}
+            </div>
+
         )
     }
 }
 
-const mapStateToProps = ({ todosState, userSessionState }: ApplicationState) => ({
-    todosState, userSessionState
+const mapStateToProps = ({ todosState }: ApplicationState) => ({
+    todosState
 });
 
 

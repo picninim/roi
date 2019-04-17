@@ -3,58 +3,59 @@ import { UserSessionState } from './../userSession/types';
 import { call, put, select } from 'redux-saga/effects';
 
 import api from '../../services/api';
-import { updateTodos } from './actions';
-
-// export interface LoginBody {
-//     errorRate?: number
-// }
+import { updateTodos, requestFail, addTodo } from './actions';
+import { Todo } from './types';
 
 export function* getAll(action: PayloadAction<any, any>) {
     try {
         const state = yield select();
         const userSessionState = state.userSessionState as UserSessionState;
-        const response = yield call(api.post, 'todo', {
-            header: {
+        const response = yield call(api.get, 'todos', {
+            headers: {
                 sessionId: userSessionState.data.sessionId
             }
         })
-        // yield call(storeToken, (response.data as UserSession).sessionId);
-        yield put(updateTodos(response.data));
+        yield put(updateTodos(Object.values(response.data.todos)));
     } catch (error) {
-        yield put(fail());
+        console.log('asdasd')
+        yield put(requestFail());
     }
 }
 
-// export function* logout() {
-//     try {
-//         const state = yield select();
-//         const userSessionState = state.userSessionState as UserSessionState;
-//         const response = yield call(api.delete, 'session', {
-//             headers: {
-//                 sessionId: userSessionState.data.sessionId
-//             }
-//         })
-//         // yield call(storeToken, (response.data as UserSession).sessionId);
-//         yield put(updateSession(null));
-//     } catch (error) {
-//         yield put(loginFail());
-//     }
-// }
+export function* createTodo(action: PayloadAction<any, any>) {
+    try {
+        const state = yield select();
+        const userSessionState = state.userSessionState as UserSessionState;
 
-// export function* patchErrorRate(action: PayloadAction<any, any>) {
-//     try {
-//         // const token = localStorage.getItem('token');
-//         const state = yield select();
-//         const userSessionState = state.userSessionState as UserSessionState;
-//         const response = yield call(api.patch, 'session', {
-//             errorRate: action.payload.errorRate
-//         }, {
-//                 headers: {
-//                     sessionId: userSessionState.data.sessionId
-//                 }
-//             })
-//         yield put(updateSession(Object.assign({}, userSessionState.data, response.data)));
-//     } catch (error) {
-//         yield put(loginFail());
-//     }
-// }
+        const todo = action.payload.todo as Todo;
+
+        const response = yield call(api.post, 'todos', { ...todo },
+        {
+            headers: {
+                sessionId: userSessionState.data.sessionId
+            }
+        })
+        yield put(addTodo(response.data.todo));
+    } catch (error) {
+        yield put(requestFail());
+    }
+}
+
+export function* deleteTodo(action: PayloadAction<any, any>) {
+    try {
+        const state = yield select();
+        const userSessionState = state.userSessionState as UserSessionState;
+
+        const todo = action.payload.todo as Todo;
+
+        const response = yield call(api.delete, `todos/${todo.id}`,
+        {
+            headers: {
+                sessionId: userSessionState.data.sessionId
+            }
+        })
+        yield put(updateTodos(Object.values(response.data.todos)));
+    } catch (error) {
+        yield put(requestFail());
+    }
+}

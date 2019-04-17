@@ -25,10 +25,14 @@ const reducer: Reducer<TodosState> = (state = INITAL_STATE, action) => {
         case TodosTypes.REQ_FAIL:
             return { ...state, data: state.data }
 
-        case TodosTypes.ADD_TODO:
-            return { ...state, data: state.data.push(action.payload.todo) }
+        case TodosTypes.UPDATE_TODOS:
+        return { ...state, data: action.payload.todos }
 
-        case TodosTypes.REMOVE_TODO:
+        case TodosTypes.ADD_TODO:
+            state.data.push(action.payload.todo);
+            return { ...state, data: state.data }
+
+        case TodosTypes.DELETE_TODO:
             return { ...state, data: action.payload.todos }
 
         default:

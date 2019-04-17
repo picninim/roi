@@ -7,7 +7,7 @@ export enum TodosTypes {
 
     UPDATE_TODOS = '@todo/UPDATE_TODOS',
     ADD_TODO = '@todo/ADD_TODO',
-    REMOVE_TODO = '@todo/ADD_TODO',
+    DELETE_TODO = '@todo/DELETE_TODO',
 }
 
 export interface Todo {
@@ -17,6 +17,10 @@ export interface Todo {
     id?: string;
     created?: string;
     updated?: string;
+}
+
+export interface TodoError {
+    error: '',
 }
 
 export interface TodosState {
