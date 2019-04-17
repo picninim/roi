@@ -1,8 +1,9 @@
 export enum UserSessionTypes {
     LOGIN_REQUEST = '@userSession/LOGIN_REQUEST',
     UPDATE_ERROR_RATE_REQUEST = '@userSession/UPDATE_ERROR_RATE_REQUEST',
-    LOGIN_SUCCESS = '@userSession/LOGIN_SUCCESS',
-    LOGIN_FAIL = '@userSession/LOGIN_FAIL'
+    UPDATE_USERSESSION = '@userSession/UPDATE_USERSESSION',
+    LOGIN_FAIL = '@userSession/LOGIN_FAIL',
+    LOGOUT_REQUEST = '@userSession/LOGOUT_REQUEST'
 }
 
 export interface UserSession {

@@ -6,7 +6,6 @@ import { ApplicationState } from '../../store';
 import { UserSession, UserSessionState } from '../../store/userSession/types';
 
 import * as UserSessionActions from '../../store/userSession/actions';
-import { LoginBody } from '../../store/userSession/saga';
 
 
 interface StateProps {
@@ -15,34 +14,28 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    loginRequest(body?: LoginBody): void;
-    updateErrorRate(body?: LoginBody): void;
+    loginRequest(errorRate?: number): void;
+    updateErrorRate(errorRate: number): void;
+    logoutRequest(): void;
 }
 
-interface OwnProps {
-
-}
-
-type Props = StateProps & DispatchProps & OwnProps;
+type Props = StateProps & DispatchProps;
 
 class HeaderComponent extends Component<Props> {
 
     async componentDidMount() {
-        const { loginRequest, updateErrorRate } = this.props;
+        const { loginRequest, logoutRequest } = this.props;
         await loginRequest();
         setTimeout(() => {
-            console.log('asdasd');
-            updateErrorRate({ errorRate: 2 });
+            // logoutRequest();
         }, 5000)
-        console.log(this.props.userSessionState);
     }
 
     render() {
-        console.log(this.props);
         const { userSessionState } = this.props;
         return (
             <div>
-                <div className="header"> {userSessionState.data ? userSessionState.data.sessionId : 'annomos'} </div>
+                <div className="header"> {userSessionState.data ? userSessionState.data.sessionId : 'Not Logged'} </div>
 
                 {userSessionState.data && <div className="header"> {userSessionState.data.errorRate} </div>}
             </div>
