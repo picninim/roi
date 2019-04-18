@@ -11,7 +11,6 @@ import * as UserSessionActions from '../../store/userSession/actions';
 
 
 interface StateProps {
-    // userSessionState: UserSessionState;
     userSessionState: UserSessionState
 }
 

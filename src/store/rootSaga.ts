@@ -7,12 +7,12 @@ import { getAll, createTodo, deleteTodo } from "./todos/saga";
 
 export default function* rootSaga() {
     return yield all([
-        takeLatest(UserSessionTypes.LOGIN_REQUEST as any, login),
-        takeLatest(UserSessionTypes.UPDATE_ERROR_RATE_REQUEST as any, patchErrorRate),
-        takeLatest(UserSessionTypes.LOGOUT_REQUEST as any, logout),
+        takeLatest(UserSessionTypes.LOGIN_REQUEST, login),
+        takeLatest(UserSessionTypes.UPDATE_ERROR_RATE_REQUEST, patchErrorRate),
+        takeLatest(UserSessionTypes.LOGOUT_REQUEST, logout),
 
-        takeLatest(TodosTypes.GET_ALL_REQ as any, getAll),
-        takeLatest(TodosTypes.CREATE_TODO_REQ as any, createTodo),
-        takeLatest(TodosTypes.DELETE_TODO_REQ as any, deleteTodo),
+        takeLatest(TodosTypes.GET_ALL_REQ, getAll),
+        takeLatest(TodosTypes.CREATE_TODO_REQ, createTodo),
+        takeLatest(TodosTypes.DELETE_TODO_REQ, deleteTodo),
     ])
 }

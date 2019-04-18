@@ -6,7 +6,7 @@ import api from '../../services/api';
 import { updateTodos, requestFail, addTodo } from './actions';
 import { Todo, ErrorTypes } from './types';
 
-export function* getAll(action: PayloadAction<any, any>) {
+export function* getAll() {
     try {
         const state = yield select();
         const userSessionState = state.userSessionState as UserSessionState;

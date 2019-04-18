@@ -36,12 +36,6 @@ class AddTodoComponent extends Component<Props, LocalProps> {
         }
     }
 
-    // addTodo: Todo = {
-    //     text: null,
-    //     isCompleted: false,
-    //     urgency: 1
-    // }
-
     subimit(event) {
         const { createTodoRequest } = this.props;
         event.preventDefault();
