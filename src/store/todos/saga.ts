@@ -4,7 +4,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import api from '../../services/api';
 import { updateTodos, requestFail, addTodo } from './actions';
-import { Todo } from './types';
+import { Todo, ErrorTypes } from './types';
 
 export function* getAll(action: PayloadAction<any, any>) {
     try {
@@ -17,8 +17,7 @@ export function* getAll(action: PayloadAction<any, any>) {
         })
         yield put(updateTodos(Object.values(response.data.todos)));
     } catch (error) {
-        console.log('asdasd')
-        yield put(requestFail());
+        yield put(requestFail(ErrorTypes.GET));
     }
 }
 
@@ -30,14 +29,14 @@ export function* createTodo(action: PayloadAction<any, any>) {
         const todo = action.payload.todo as Todo;
 
         const response = yield call(api.post, 'todos', { ...todo },
-        {
-            headers: {
-                sessionId: userSessionState.data.sessionId
-            }
-        })
+            {
+                headers: {
+                    sessionId: userSessionState.data.sessionId
+                }
+            })
         yield put(addTodo(response.data.todo));
     } catch (error) {
-        yield put(requestFail());
+        yield put(requestFail(ErrorTypes.ADD));
     }
 }
 
@@ -49,13 +48,13 @@ export function* deleteTodo(action: PayloadAction<any, any>) {
         const todo = action.payload.todo as Todo;
 
         const response = yield call(api.delete, `todos/${todo.id}`,
-        {
-            headers: {
-                sessionId: userSessionState.data.sessionId
-            }
-        })
+            {
+                headers: {
+                    sessionId: userSessionState.data.sessionId
+                }
+            })
         yield put(updateTodos(Object.values(response.data.todos)));
     } catch (error) {
-        yield put(requestFail());
+        yield put(requestFail(ErrorTypes.DELETE, action.payload.todo.id));
     }
 }

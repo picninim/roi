@@ -19,12 +19,16 @@ export interface Todo {
     updated?: string;
 }
 
-export interface TodoError {
-    error: '',
+
+export enum ErrorTypes {
+    ADD = 'ADD',
+    DELETE = 'DELETE',
+    GET = 'GET',
 }
 
 export interface TodosState {
     readonly data: Todo[],
     readonly loading: boolean,
-    readonly error: boolean
+    readonly error: ErrorTypes,
+    readonly errorDetails: any,
 }

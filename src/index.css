@@ -66,3 +66,8 @@ input[type="range"] {
 input[type="range"]:hover {
   opacity: 1;
 }
+
+.error {
+  color: #ff5353;
+  padding: 15px;
+}

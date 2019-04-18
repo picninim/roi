@@ -5,10 +5,9 @@ import { bindActionCreators, AnyAction } from 'redux';
 import './styles.css';
 
 import { ApplicationState } from '../../store';
-import { UserSession, UserSessionState } from '../../store/userSession/types';
+import { UserSessionState } from '../../store/userSession/types';
 
 import * as UserSessionActions from '../../store/userSession/actions';
-import { number } from 'prop-types';
 
 
 interface StateProps {
@@ -32,14 +31,14 @@ class HeaderComponent extends Component<Props, LocalState> {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             errorRate: ''
         }
     }
 
     async componentDidMount() {
-        const { loginRequest, logoutRequest } = this.props;
+        const { loginRequest } = this.props;
         await loginRequest();
         setTimeout(() => {
             // logoutRequest();
@@ -55,12 +54,12 @@ class HeaderComponent extends Component<Props, LocalState> {
                     <div> <span className="header-label">Session:</span> {userSessionState.data ? userSessionState.data.sessionId : 'Not Logged'} </div>
                     {userSessionState.data && <div> <span className="header-label">ErrorRate:</span> {userSessionState.data.errorRate} </div>}
                     <div>
-                        {!userSessionState.data && <input value={errorRate} required onChange={ (event) => this.setState({errorRate: event.target.value}) } className="error-rate" placeholder="Error Rate?" type="number"/> }
-                        <button className="button" onClick={ () => userSessionState.data  ? logoutRequest() : loginRequest( parseInt(errorRate)) }>
-                            {userSessionState.data ? 'Logout' :  'Login'}
+                        {!userSessionState.data && <input value={errorRate} required onChange={(event) => this.setState({ errorRate: event.target.value })} className="error-rate" placeholder="Error Rate?" type="number" />}
+                        <button className="button" onClick={() => userSessionState.data ? logoutRequest() : loginRequest(parseInt(errorRate))}>
+                            {userSessionState.data ? 'Logout' : 'Login'}
                         </button>
                     </div>
-                   
+
                 </div>
                 {userSessionState.error && <div className="header-error"> Oops, did't work. Can you try again?</div>}
             </div>

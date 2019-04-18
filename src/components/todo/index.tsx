@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import './styles.css'
+
 import { ApplicationState } from '../../store';
-import { Todo } from '../../store/todos/types';
+import { Todo, TodosState } from '../../store/todos/types';
 import * as TodoActions from '../../store/todos/actions';
 
 
 interface StateProps {
+    todosState: TodosState
 }
 
 interface DispatchProps {
@@ -26,14 +29,18 @@ class TodoComponent extends Component<Props> {
     }
 
     render() {
-        const { todo, deleteTodoRequest } = this.props;
+        const { todo, deleteTodoRequest, todosState } = this.props;
         return (
-            <li onClick={() => deleteTodoRequest(todo)}> {todo.text} </li>
+            <div className={`todo ${todo.isCompleted ? 'completed' : 'incompleted'}`} >
+                {todo.text}
+                <button onClick={() => deleteTodoRequest(todo)}>Remove</button>
+                {todosState.errorDetails === todo.id && <div className="error"> Oops!! </div>}
+            </div>
         )
     }
 }
 
-const mapStateToProps = ({ }: ApplicationState) => ({});
+const mapStateToProps = ({ todosState }: ApplicationState) => ({ todosState });
 
 
 const mapDispatchToProps = dispatch => bindActionCreators(TodoActions, dispatch);
