@@ -26,18 +26,6 @@
   font-size: 1.2em;
 }
 
-.input-holder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  border: 1px solid #DDD;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.04);
-  position: relative;
-}
-
 /* .input-holder > input {
   display: block;
   margin: auto;
@@ -50,19 +38,4 @@
   margin: 10px 0;
   position: relative;
   height: 100%;
-}
-input.range-1 {
-  background: linear-gradient(90deg, #37d461 8%, #d4d4d4 6px, #cecece 100%);
-}
-input.range-2 {
-  background: linear-gradient(90deg, #b5d437 29%, #d4d4d4 6px, #cecece 100%);
-}
-input.range-3 {
-  background: linear-gradient(90deg, #e4d629 50%, #d4d4d4 6px, #cecece 100%);
-}
-input.range-4 {
-  background: linear-gradient(90deg, #ffab42 71%, #d4d4d4 6px, #cecece 100%);
-}
-input.range-5 {
-  background: linear-gradient(90deg, #f6957f 100%, #d4d4d4 6px, #cecece 100%);
 }

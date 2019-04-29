@@ -7,6 +7,8 @@ import './styles.css';
 import { ApplicationState } from '../../store';
 import * as TodoActions from '../../store/todos/actions';
 import { Todo, TodosState, ErrorTypes } from '../../store/todos/types';
+import ToughnessComponent from '../toughness';
+import CompletenessComponent from '../completeness';
 
 
 interface StateProps {
@@ -17,13 +19,13 @@ interface DispatchProps {
     createTodoRequest(todo: Todo): void;
 }
 
-interface LocalProps {
+interface LocalState {
     addTodo: Todo;
 }
 
 type Props = StateProps & DispatchProps;
 
-class AddTodoComponent extends Component<Props, LocalProps> {
+class AddTodoComponent extends Component<Props, LocalState> {
 
     constructor(props) {
         super(props);
@@ -40,7 +42,6 @@ class AddTodoComponent extends Component<Props, LocalProps> {
         const { createTodoRequest } = this.props;
         event.preventDefault();
         createTodoRequest(this.state.addTodo);
-        this.resetModel();
     }
 
     resetModel() {
@@ -58,7 +59,16 @@ class AddTodoComponent extends Component<Props, LocalProps> {
         this.setState(() => ({ addTodo }))
     }
 
-    async componentDidMount() {
+    componentWillUpdate(nextProps: Props, nextState: LocalState) {
+        const { todosState } = this.props;
+        const { addTodo } = this.state;
+        const _addTodo = JSON.stringify(addTodo);
+        const nextAdTodo = JSON.stringify(nextState.addTodo);
+        // *TODO Make a single loadingstate and error Handling
+        if (todosState.loading && !nextProps.todosState.error && !nextProps.todosState.loadingTodo) {
+
+            this.resetModel();
+        }
     }
 
     render() {
@@ -71,16 +81,8 @@ class AddTodoComponent extends Component<Props, LocalProps> {
                     <input type="text" placeholder="Add a todo here!" value={addTodo.text} required onChange={(event) => this.handleModelChange('text', event.target.value)} />
                 </div>
                 <div className="details">
-                    <label className="input-holder">
-                        Did you finished it?
-                                <input type="checkbox" checked={addTodo.isCompleted} onChange={(event) => this.handleModelChange('isCompleted', event.target.checked)} />
-                    </label>
-
-                    <label className="input-holder">
-                        {addTodo.isCompleted ? 'How tough it was?' : 'How tough it is?'}
-                        <input className={'range-' + addTodo.urgency} type="range" required min="1" max="5" value={addTodo.urgency.toString()} onChange={(event) => this.handleModelChange('urgency', parseInt(event.target.value))} />
-                        <div className={addTodo.urgency >= 5 ? 'redux' : null}>{addTodo.urgency >= 5 ? 'Redux-Saga Level' : addTodo.urgency}</div>
-                    </label>
+                    <CompletenessComponent value={addTodo.isCompleted} onChange={(value) => { this.handleModelChange('isCompleted', value) }}></CompletenessComponent>
+                    <ToughnessComponent value={addTodo.urgency} complete={addTodo.isCompleted} onChange={(value) => { this.handleModelChange('urgency', value) }} ></ToughnessComponent>
                 </div>
                 <button type="submit">
                     Add Todo

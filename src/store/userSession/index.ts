@@ -17,7 +17,7 @@ const reducer: Reducer<UserSessionState> = (state = INITAL_STATE, action) => {
             return { ...state, loading: true }
 
         case UserSessionTypes.UPDATE_USERSESSION:
-            return { ...state, loading: false, data: action.payload.data }
+            return { ...state, loading: false, data: action.payload.data, error: false }
 
         case UserSessionTypes.LOGIN_FAIL:
             return { ...state, loading: false, error: true, data: state.data }

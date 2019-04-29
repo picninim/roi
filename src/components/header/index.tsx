@@ -32,28 +32,28 @@ class HeaderComponent extends Component<Props, LocalState> {
         super(props);
 
         this.state = {
-            errorRate: ''
+            errorRate: '50'
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const { loginRequest } = this.props;
-        await loginRequest();
-        setTimeout(() => {
-            // logoutRequest();
-        }, 5000)
+        loginRequest();
     }
 
     render() {
-        const { userSessionState, logoutRequest, loginRequest } = this.props;
+        const { userSessionState, logoutRequest, loginRequest, updateErrorRate } = this.props;
         const { errorRate } = this.state;
         return (
             <div className="header">
                 <div className="header-container">
                     <div> <span className="header-label">Session:</span> {userSessionState.data ? userSessionState.data.sessionId : 'Not Logged'} </div>
-                    {userSessionState.data && <div> <span className="header-label">ErrorRate:</span> {userSessionState.data.errorRate} </div>}
+                    <div> <span className="header-label">ErrorRate:</span>
+                        <input value={errorRate} required onChange={(event) => this.setState({ errorRate: event.target.value })} className="error-rate" placeholder="Error Rate" type="number" />
+                        {userSessionState.data && <button className="button" onClick={() => errorRate && updateErrorRate(parseInt(errorRate))}> Update </button>}
+                    </div>
                     <div>
-                        {!userSessionState.data && <input value={errorRate} required onChange={(event) => this.setState({ errorRate: event.target.value })} className="error-rate" placeholder="Error Rate?" type="number" />}
+                        {/* {!userSessionState.data && <input value={errorRate} required onChange={(event) => this.setState({ errorRate: event.target.value })} className="error-rate" placeholder="Error Rate?" type="number" />} */}
                         <button className="button" onClick={() => userSessionState.data ? logoutRequest() : loginRequest(parseInt(errorRate))}>
                             {userSessionState.data ? 'Logout' : 'Login'}
                         </button>

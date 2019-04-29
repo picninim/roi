@@ -67,7 +67,7 @@ class Todosomponent extends Component<Props, LocalState> {
                 {
                     todosState.error === ErrorTypes.GET &&
                     <div className="todo">
-                        <div className="error"> I'm really unreliable! try I can, luckly I bring your TODOS list </div>
+                        <div className="error"> I'm really unreliable! try  again, luckly I'll bring your TODOS list </div>
                         <button onClick={() => { getAllRequest() }}> Try  </button>
                     </div>
                 }
@@ -82,7 +82,7 @@ class Todosomponent extends Component<Props, LocalState> {
                 </div>
                 {
                     todosState.error !== ErrorTypes.GET && todosState.data.length <= 0 &&
-                    <div className="todo"> You don't have todos! Great go watch GOT! &#x1F60E; </div>
+                    <div className="todo"> You don't have todos! Great! go watch GOT! &#x1F60E; </div>
                 }
                 {this.printTodos(todosState.data)}
             </div>

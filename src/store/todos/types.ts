@@ -6,6 +6,7 @@ export enum TodosTypes {
     REQ_FAIL = '@todo/REQ_FAIL',
 
     UPDATE_TODOS = '@todo/UPDATE_TODOS',
+    UPDATE_TODO = '@todo/UPDATE_TODO',
     ADD_TODO = '@todo/ADD_TODO',
     DELETE_TODO = '@todo/DELETE_TODO',
 }
@@ -24,6 +25,7 @@ export enum ErrorTypes {
     ADD = 'ADD',
     DELETE = 'DELETE',
     GET = 'GET',
+    UPDATE = 'UPDATE',
 }
 
 export interface TodosState {
@@ -31,4 +33,5 @@ export interface TodosState {
     readonly loading: boolean,
     readonly error: ErrorTypes,
     readonly errorDetails: any,
+    readonly loadingTodo: string,
 }
